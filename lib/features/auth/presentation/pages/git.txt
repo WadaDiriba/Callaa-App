@@ -1,3 +1,0 @@
-ft   for feature 
-inint for feature addition
-fix  if you fix any error thing 
