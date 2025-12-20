@@ -53,6 +53,7 @@ if(authProvider.currentuser != null){
   Navigator.pushReplacementNamed(context, '/home');
 
 ScaffoldMessenger.of(context).showSnackBar(
+  
   SnackBar(
   content: Text(authProvider.currentuser!.getWellcomemesssage())
 ),

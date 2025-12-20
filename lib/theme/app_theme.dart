@@ -5,6 +5,15 @@ class AppTheme {
 
   static ThemeData darkTheme=ThemeData(
 
-    scaffoldBackgroundColor:Color(AppConstant.darkThemebackgroundColors)
+    scaffoldBackgroundColor:Color(AppConstant.darkThemebackgroundColors),
+
+
+
+
+  );
+
+  static ThemeData lightTheme=ThemeData(
+
+    scaffoldBackgroundColor:Color(AppConstant.lightThemebackgroundColors),
   );
 }

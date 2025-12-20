@@ -56,12 +56,12 @@ class AuthRepository {
 
 class AuthRepositoryR{
 
-  Future<UserModel> register(String fristName,String lastName,String confirmpassword,String password,String email) async {
+  Future<UserModel> register(String fullName,String password,String username) async {
 
 
     try{
 
-      Uri url=Uri.parse("http://example.com/api/v1/register");
+      Uri url=Uri.parse("https://chella-api.onrender.com/chella-api/users/register");
 
       final response=await http.post(
 
@@ -77,9 +77,13 @@ class AuthRepositoryR{
 
                   
                 {
-          "first_name": fristName,
-          "last_name": lastName,
-          "email": email,
+          "fullName": fullName,
+          
+          "password": password,
+          "username":username,
+          
+         
+        
          
                 }
                )
@@ -88,7 +92,10 @@ class AuthRepositoryR{
 
       );
 
-      if(response.statusCode==200){
+       
+         print("Response Status:${response.statusCode}");
+         print("Response Body:${response.body}");
+      if(response.statusCode==201){
 
         final data=jsonDecode(response.body);
         return UserModel.fromJson(data);

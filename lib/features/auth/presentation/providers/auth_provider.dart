@@ -10,8 +10,12 @@ class AuthProvider with ChangeNotifier{
   final AuthRepository _repository;
   // oo trach loading how app state.
   bool _isloading=true;
+  bool _isregistered=false;
+
+
 
   UserEntity? _currentuser;
+ 
   String?_error;
  
 
@@ -56,15 +60,23 @@ finally {
 }
 
 
-Future<void> register(String fristName,String lastName,String confirmpassword,String password,String email) async{
+Future<void> register( String fullName,String password,String username) async{ 
 
 
 _isloading = true;
 _error = null;
 notifyListeners();
 try{
- final UserModel user = await AuthRepositoryR().register(fristName,lastName,confirmpassword,password,email);
-// _currentuser = UserEntity(username:user.username);
+ final UserModel user = await AuthRepositoryR().register(fullName,password,username);
+  _currentuser = UserEntity(
+        id: user.id,
+        username: user.username,
+        fullName: user.fullName,
+        referralCode: user.referralCode,
+        amount: user.amount,
+        totalReffered:user.totalReffered,
+        totalEarned: user.totalEarned
+      );
  _error = null;
 }
 catch (e){

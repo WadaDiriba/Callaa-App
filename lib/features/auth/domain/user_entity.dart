@@ -25,7 +25,7 @@ class UserEntity {
   // ignore: non_constant_identifier_names
   String getWellcomemesssage(){
 
-    return'welcome$username';
+    return'welcome$fullName';
           
   }
 

@@ -33,6 +33,9 @@ class CallaaApp extends StatelessWidget {
       title: AppConstant.appName,
 
       theme: AppTheme.darkTheme,
+
+      darkTheme: AppTheme.darkTheme,
+
       debugShowCheckedModeBanner: false,
 
       initialRoute: "/login",
@@ -44,6 +47,7 @@ class CallaaApp extends StatelessWidget {
         "/register":(context)=>RegistrationPage(),
         
          "/home":(context)=>HomePage(),
+
 
       },
     );

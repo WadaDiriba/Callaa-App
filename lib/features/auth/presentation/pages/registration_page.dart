@@ -1,5 +1,7 @@
 
+import 'package:callaa_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -8,42 +10,61 @@ class RegistrationPage extends StatefulWidget {
   State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
-
-
- 
+     class _RegistrationPageState extends State<RegistrationPage> {
 
     final TextEditingController _fullName=TextEditingController();
   final TextEditingController _password=TextEditingController();
-
-
+final TextEditingController _Confirmpassword=TextEditingController();
+  final TextEditingController _username=TextEditingController();
 
   @override
   void dispose() {
     _fullName.dispose();
-    _confirmpassword.dispose();
-    
+    _Confirmpassword.dispose();
+    _username.dispose();
     
     _password.dispose();
     
     super.dispose();
   }
 
-
-  final TextEditingController _confirmpassword=TextEditingController();
   bool ishidden=true;
   bool ischecked=false;
   final  _formkey=GlobalKey<FormState>();
 
     void register() async{
       
+        String fullName=_fullName.text.trim();
+         String password=_password.text.trim();
+      
+         print("FullName:$fullName,Password:$password");
+
+     
+        
+
+ final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
 
+  await authProvider.register(_fullName.text, _password.text,_username.text);
+   
+if(authProvider.currentuser != null){
 
 
+  Navigator.pushReplacementNamed(context, '/home');
 
-    }
+ScaffoldMessenger.of(context).showSnackBar(
   
+  SnackBar(
+  content: Text(authProvider.currentuser!.getWellcomemesssage())
+),
+);
+  }
+
+  else{
+
+ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(authProvider.error!)));
+  }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -150,10 +171,38 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
 
 
+                          SizedBox(height: 25,),
+
+                             Align(
+
+                              alignment: Alignment.topLeft,
+
+                              child: Text("Username:",
+
+                              style: TextStyle(color: Colors.white),
                               
+                              
+                                  ),
+                             ),
 
-                                
+                        TextFormField(
 
+                          controller: _username,
+                          decoration: InputDecoration(
+                             labelText: "Username",
+                              filled: true,
+                          fillColor: const Color(0xFF2D2D2D),
+                          hintStyle: TextStyle(
+                            color: Colors.white,
+                          ),
+                          hintText: "Enter username",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          )
+                        ),
+                      ),
+
+                          SizedBox(height: 25,),
                 
                          Align(
                         alignment: Alignment.topLeft,
@@ -182,44 +231,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           )
                         ),
                        ),
-                         SizedBox(height: 25,),
+                         
                 
-                         Align(
-                        alignment: Alignment.topLeft,
-                        
-                        child: Text("ConfirmPassword:",
-                        style: TextStyle(color: Colors.white),)),
-                       TextFormField(
-                
-                        controller: _confirmpassword,
-                
-                        obscureText: ishidden,
-                
-                        decoration: InputDecoration(
-                           labelText: "Confirmpassword",
-                
-                          hintStyle:TextStyle(
-                
-                            color: Colors.white,
-                          ),
-                
-                          hintText: "Re-Enter password",
-                
-
-                          
-                            filled: true,
-                            
-                        fillColor: const Color(0xFF2D2D2D),
-                
-                          border: OutlineInputBorder(
-                
-                            borderRadius: BorderRadius.circular(20),
-                          )
-                        ),
-                       ),
-
-                
-                
+                    
                       SizedBox(height: 30,),
                 
                      SizedBox(
@@ -228,7 +242,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         child: ElevatedButton(
                            
                           onPressed: () {
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>????))
+                           if(_formkey.currentState!.validate()) {
+                              register();
+                              }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.yellow,
@@ -256,7 +272,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                            
                           onPressed: () {
                 
-                            /// there is may be something navigate to here
+                           Navigator.pushReplacementNamed(context, '/login');
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.yellow,
@@ -280,29 +296,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                 ),
               ),
-        Checkbox(
-          value: ischecked,
-          onChanged: (bool? newValue) {
-            setState(() {
-              ischecked = newValue ?? false; 
-            });
-          },
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: Text(
-            "Before registering, you agree to our Terms & Conditions",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-
             ],
-
-          
+ 
           ), 
           ),
        ),
