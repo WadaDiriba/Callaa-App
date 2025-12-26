@@ -1,62 +1,69 @@
 import 'dart:convert';
 
-import 'package:callaa_app/core/constants/app_constant.dart';
+
+import 'package:callaa_app/core/networks/api_client.dart';
+import 'package:callaa_app/core/networks/api_exceptions.dart';
 import 'package:http/http.dart' as http;
 import 'package:callaa_app/features/auth/data/model/user_model.dart';
 
 class AuthRepository {
+
+
+final ApiClient apiClient;
+  AuthRepository(this.apiClient);
   
   Future<UserModel> login(String username, String password) async {
     try {
     
 
-      Uri url=Uri.parse('${AppConstant.baseUrl}users/login');
 
-      final response = await http.post(
-        url,
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
+
+      final response = await apiClient.post(
+        'users/login',
+        body: {
+          'username': username,
+          'password': password,
         },
-        body: jsonEncode({
-          "username": username,
-          "password": password,
-        }),
       );
 
-
-      if (response.statusCode == 201) {
-      
-        final data = jsonDecode(response.body);
+     
 
       
-        return UserModel.fromJson(data);
-      } else {
+        return UserModel.fromJson(response);
+
+    }
+
+    on ApiExceptions catch (e) {
+
+      print(e.toString());
+
+      
+
+     
 
         
 
- 
-             throw Exception("Your login info is incorrect try again ");
+        rethrow;
+
 
              
-      }
+      
     } catch (e) {
 
-        print(e.toString());
+        throw Exception(e.toString());
 
         
-             throw Exception("Your login info is incorrect try again ");
+     
 
      
     }
+  
   }
 }
 
-
-
 class AuthRepositoryR{
 
-  Future<UserModel> register(String fullName,String password,String username) async {
+  Future<bool> register(String fullName,String password,String username) async {
 
 
     try{
@@ -93,12 +100,11 @@ class AuthRepositoryR{
       );
 
        
-         print("Response Status:${response.statusCode}");
-         print("Response Body:${response.body}");
-      if(response.statusCode==201){
+         
+      if(response.statusCode==201 ){
 
-        final data=jsonDecode(response.body);
-        return UserModel.fromJson(data);
+        
+        return true;
 
 
       }

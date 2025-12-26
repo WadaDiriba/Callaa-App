@@ -14,13 +14,13 @@ class RegistrationPage extends StatefulWidget {
 
     final TextEditingController _fullName=TextEditingController();
   final TextEditingController _password=TextEditingController();
-final TextEditingController _Confirmpassword=TextEditingController();
+
   final TextEditingController _username=TextEditingController();
 
   @override
   void dispose() {
     _fullName.dispose();
-    _Confirmpassword.dispose();
+   
     _username.dispose();
     
     _password.dispose();
@@ -47,15 +47,15 @@ final TextEditingController _Confirmpassword=TextEditingController();
 
   await authProvider.register(_fullName.text, _password.text,_username.text);
    
-if(authProvider.currentuser != null){
+if(authProvider.userRegistered==true){
 
 
-  Navigator.pushReplacementNamed(context, '/home');
+  Navigator.pushReplacementNamed(context, '/login');
 
 ScaffoldMessenger.of(context).showSnackBar(
   
   SnackBar(
-  content: Text(authProvider.currentuser!.getWellcomemesssage())
+  content: Text("Registration Successful,Please Login")
 ),
 );
   }
@@ -154,6 +154,7 @@ ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(authProvider.er
                         decoration: InputDecoration(
                            labelText: "FullName",
                             filled: true,
+                            
                         fillColor: const Color(0xFF2D2D2D),
                 
                            hintStyle:TextStyle(

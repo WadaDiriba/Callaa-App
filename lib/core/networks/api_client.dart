@@ -5,21 +5,18 @@ import 'package:callaa_app/core/networks/api_exceptions.dart';
 import 'package:http/http.dart' as http;
 
 class ApiClient {
-
-
 final String baseUrl;
 final Map<String,dynamic>defaultHeaders;
-
-
-
   ApiClient( {
     required this.baseUrl,
     this.defaultHeaders=const{
 
       "Content-Type": "application/json",
       "Accept": "application/json",
-    
+      
+  
   },
+
     
     
     }
@@ -59,9 +56,6 @@ final Map<String,dynamic>defaultHeaders;
     }
 
     // Generic POST request 
-
-
-
    
 Future<Map<String,dynamic>> post(
       String endpoint,{
@@ -135,8 +129,6 @@ Future<Map<String,dynamic>> post(
 }
 
     }
-
-
     Exception _handleError(dynamic error) {
   if (error is http.ClientException) {
 
