@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Chella Rewards',
-        theme: AppTheme.lightTheme,
+        theme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
         initialRoute: '/login',
         routes: {
