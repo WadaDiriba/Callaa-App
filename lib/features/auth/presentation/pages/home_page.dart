@@ -1,4 +1,5 @@
 import 'package:callaa_app/features/auth/presentation/providers/auth_provider.dart';
+import 'package:callaa_app/features/task/presantion/pages/task_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -218,8 +219,8 @@ GridView.builder(
       onTap: () {
         switch (index) {
           case 0:
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (_) => SendMoneyPage()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => TaskPage()));
             break;
 
           case 1:

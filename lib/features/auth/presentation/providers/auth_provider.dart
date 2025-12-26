@@ -1,3 +1,4 @@
+import 'package:callaa_app/core/networks/token_manager.dart';
 import 'package:callaa_app/features/auth/data/model/user_model.dart';
 import 'package:callaa_app/features/auth/data/repository/auth_repository.dart';
 import 'package:callaa_app/features/auth/domain/user_entity.dart';
@@ -35,6 +36,9 @@ _error = null;
 notifyListeners();
 try{
  final UserModel user = await _repository.login(username,password);
+ final TokenManager tokenInstance = TokenManager();
+ String token = user.accessToken ?? "";
+ tokenInstance.savetoken(token);
  _currentuser = UserEntity(
       id: user.id,
       username: user.username,

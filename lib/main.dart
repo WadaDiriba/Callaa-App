@@ -3,6 +3,9 @@ import 'package:callaa_app/core/constants/app_constant.dart';
 import 'package:callaa_app/core/networks/api_client.dart';
 import 'package:callaa_app/features/auth/data/repository/auth_repository.dart';
 import 'package:callaa_app/features/auth/presentation/pages/registration_page.dart';
+
+import 'package:callaa_app/features/task/data/repo/task_repo.dart';
+import 'package:callaa_app/features/task/presantion/providers/task_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +42,14 @@ class MyApp extends StatelessWidget {
             final apiClient = Provider.of<ApiClient>(context, listen: false);
             return AuthProvider(
               AuthRepository(apiClient), //  Pass the ApiClient here
+            );
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            final apiClient = Provider.of<ApiClient>(context, listen: false);
+            return TaskProvider(
+               TaskRepo(apiClient),  //  Pass the ApiClient here
             );
           },
         ),
